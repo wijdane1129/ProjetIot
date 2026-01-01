@@ -126,7 +126,7 @@ Le système utilise les "Topics" suivants pour communiquer. Vous pouvez utiliser
 
 ## 👥 Auteurs
 
-Projet réalisé dans le cadre du module **IoT** à l'**ENSAM Meknès** (Année 2024-2025).
+Projet réalisé dans le cadre du module **IoT** à l'**ENSAM Meknès** (Année 2025-2026).
 
 * **Ziyter Fatima-Ezzahrae**
 * **En-Najjari Meryem**
