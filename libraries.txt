@@ -1,0 +1,13 @@
+# Wokwi Library List
+# See https://docs.wokwi.com/guides/libraries
+
+DHT sensor library for ESPx
+WiFi
+Blynk
+DHT11
+DHT sensor library
+NewPing
+LiquidCrystal I2C
+MQTTPubSubClient_Generic
+MQTTPubSubClient
+PubSubClient
