@@ -1,137 +1,594 @@
-# 💧 Système Intelligent de Gestion de l'Eau (Smart Water IoT)
+# 💧 Smart Water Management System (IoT Project)
 
-![Badge Statut](https://img.shields.io/badge/Status-Functional-success)
-![Badge ESP32](https://img.shields.io/badge/Hardware-ESP32-blue)
-![Badge Protocol](https://img.shields.io/badge/Protocol-MQTT-green)
-![Badge Interface](https://img.shields.io/badge/Dashboard-Node--RED-red)
+<div align="center">
 
-## 📖 Description du Projet
+![Status](https://img.shields.io/badge/Status-Functional-success?style=for-the-badge)
+![ESP32](https://img.shields.io/badge/Hardware-ESP32-blue?style=for-the-badge&logo=espressif)
+![MQTT](https://img.shields.io/badge/Protocol-MQTT-green?style=for-the-badge)
+![Node-RED](https://img.shields.io/badge/Dashboard-Node--RED-red?style=for-the-badge)
+![Wokwi](https://img.shields.io/badge/Simulation-Wokwi-orange?style=for-the-badge)
 
-Ce projet est une solution **IoT (Internet of Things)** complète destinée à l'agriculture intelligente ou à la domotique ("Smart Home"). Il vise à automatiser la gestion de l'eau (remplissage de réservoir et irrigation) tout en surveillant les conditions environnementales et en assurant la sécurité via des alertes.
+**An intelligent IoT solution for automated water management in agriculture and smart homes**
 
-Le système repose sur un microcontrôleur **ESP32** simulé sur Wokwi, communiquant via le protocole **MQTT** avec un Dashboard de supervision **Node-RED**.
+[📺 Watch Demo](#-project-videos) • [📖 Documentation](#-project-overview) • [🚀 Quick Start](#-quick-start-guide) • [👥 Team](#-team)
 
-### 🎯 Objectifs Principaux
-1.  **Surveillance en temps réel** : Niveau d'eau du réservoir, humidité du sol, température et humidité de l'air.
-2.  **Automatisation** : Activation des pompes selon des seuils critiques (sol sec, réservoir vide).
-3.  **Contrôle à distance** : Possibilité de passer en mode manuel pour piloter les actuateurs depuis une interface web.
-4.  **Sécurité** : Détection d'incendie (Temp > 65°C) et alerte de débordement.
+</div>
 
 ---
 
-## 🛠️ Architecture Technique
+## 🎥 Project Videos
 
-### 1. Matériel (Simulation Wokwi)
-* **Microcontrôleur** : ESP32 DevKit V1.
-* **Capteurs** :
-    * `DHT22` : Température et Humidité.
-    * `HC-SR04` : Capteur Ultrason (Mesure du niveau d'eau dans la cuve).
-    * `Soil Moisture Sensor` : Capteur d'humidité du sol (Simulé par potentiomètre/chip custom).
-* **Actuateurs** :
-    * 2x **Relais** : Contrôle des pompes (Pompe Remplissage & Pompe Irrigation).
-    * **Buzzer** : Alarme sonore (Incendie ou niveau d'eau critique).
-    * **LEDs** : Indicateurs d'état visuels.
+### 🎬 System Demo & Live Functionality
 
-### 2. Logiciel & Protocoles
-* **Langage** : C++ (Arduino Framework).
-* **Protocole de Communication** : MQTT (Message Queuing Telemetry Transport).
-* **Broker MQTT** : `broker.mqtt.cool` (Public).
-* **Interface Homme-Machine (IHM)** : Node-RED (Dashboard UI).
+<div align="center">
 
----
+[![Watch Demo](https://img.youtube.com/vi/jz0VtURfFew/maxresdefault.jpg)](https://youtu.be/jz0VtURfFew)
 
-## 🔌 Câblage (Pinout)
+**▶️ [Watch on YouTube](https://youtu.be/jz0VtURfFew)**
 
-Voici la correspondance des broches (Pins) définies dans le code `sketch.ino` :
+📹 **Local File**: `h1st02tr.mp4` (included in repository)
 
-| Composant | Pin ESP32 | Description |
-| :--- | :--- | :--- |
-| **DHT22** | GPIO 15 | Capteur Temp/Hum |
-| **Soil Moisture** | GPIO 34 | Entrée Analogique (ADC) |
-| **HC-SR04 (Trig)**| GPIO 5 | Déclencheur Ultrason |
-| **HC-SR04 (Echo)**| GPIO 18 | Réception Ultrason |
-| **Pompe 1 (Relais)**| GPIO 2 | Pompe Réservoir |
-| **Pompe 2 (Relais)**| GPIO 13 | Pompe Irrigation |
-| **Buzzer** | GPIO 4 | Alarme Sonore |
+</div>
+
+**What you'll see in this demo:**
+- ⚡ Real-time system operation
+- 📊 Live sensor data visualization
+- 🎛️ Manual and automatic control modes
+- 🚨 Fire detection and alert system
+- 📡 MQTT communication in action
+- 🖥️ Node-RED dashboard interface
 
 ---
 
-## 🚀 Installation et Utilisation
+### 📚 Complete Project Explanation (For Beginners)
 
-### Prérequis
-* Un navigateur web (pour Wokwi).
-* **Node-RED** installé localement (`npm install -g node-red`) OU une instance Node-RED en ligne.
+> 🎓 **Educational video explaining the entire IoT concept and project architecture**
 
-### Étape 1 : Simulation Wokwi
-1.  Ouvrez le projet sur [Wokwi.com](https://wokwi.com).
-2.  Assurez-vous que les fichiers suivants sont présents :
-    * `sketch.ino` (Le code principal).
-    * `diagram.json` (Le schéma de câblage).
-    * `libraries.txt` (Liste des dépendances : `WiFi`, `PubSubClient`, `DHTesp`, `NewPing`).
-3.  Lancez la simulation (Bouton vert **Play**).
-4.  Vérifiez dans le moniteur série que l'ESP32 se connecte bien au WiFi ("Connected") et au Broker MQTT.
-
-### Étape 2 : Configuration Node-RED
-1.  Lancez Node-RED dans votre terminal :
-    ```bash
-    node-red
-    ```
-2.  Accédez à l'interface via `http://localhost:1880`.
-3.  Importez le flux (Flow) :
-    * Menu (en haut à droite) -> **Import**.
-    * Collez le code JSON de votre Dashboard Node-RED.
-4.  Vérifiez que les nœuds MQTT sont configurés sur le broker `broker.mqtt.cool` (port 1883).
-5.  Cliquez sur **Deploy**.
-6.  Ouvrez le Dashboard via `http://localhost:1880/ui`.
+**This tutorial covers:**
+- 🌐 Introduction to Internet of Things (IoT)
+- 🔌 Role of ESP32 microcontroller
+- 📡 How sensors and actuators work together
+- 🔄 MQTT protocol explained simply
+- ⚙️ Automatic vs Manual operation modes
+- 🖥️ Node-RED dashboard functionality
+- 💡 Real-world applications in agriculture and smart homes
 
 ---
 
-## 📡 Documentation API MQTT
+## 📖 Project Overview
 
-Le système utilise les "Topics" suivants pour communiquer. Vous pouvez utiliser n'importe quel client MQTT (MQTT Explorer, Smartphone) pour interagir.
+### 🎯 Mission Statement
 
-### Topics de Publication (Sorties de l'ESP32)
-* `smartwater/waterlevel` : Niveau de remplissage du réservoir (0-100%).
-* `smartwater/soilmoisture` : Humidité du sol (0-100%).
-* `smartwater/temperature` : Température ambiante (°C).
-* `smartwater/humidity` : Humidité de l'air (%).
-* `smartwater/fire` : **ALERTE** en cas d'incendie (Message texte).
-* `smartwater/alert` : **ALERTE** niveau d'eau critique.
+This project delivers a complete **IoT (Internet of Things)** solution for **smart agriculture** and **home automation**, enabling automated water management for tank filling and irrigation while monitoring environmental conditions and ensuring safety through intelligent alerts.
 
-### Topics de Souscription (Commandes vers l'ESP32)
-* `smartwater/mode_auto` :
-    * `1` = Mode Automatique (Gestion autonome par seuils).
-    * `2` = Mode Manuel (Contrôle utilisateur).
-* `smartwater/manual/pump1` : `1` (ON) ou `0` (OFF) - Contrôle Pompe Réservoir.
-* `smartwater/manual/pump2` : `1` (ON) ou `0` (OFF) - Contrôle Pompe Irrigation.
+The system is built on an **ESP32 microcontroller** (simulated on **Wokwi**) communicating via **MQTT protocol** with a web interface developed in **Node-RED**.
 
 ---
 
-## ⚙️ Logique de Fonctionnement
+## ✨ Key Features
 
-### 1. Mode Automatique (`system_mode = 1`)
-* **Remplissage** : La Pompe 1 s'active si le niveau d'eau < 20% et s'arrête à > 90%.
-* **Irrigation** : La Pompe 2 s'active si l'humidité du sol < 30% et s'arrête à > 70%.
+### 📊 Real-Time Monitoring
+- 💧 **Water tank level** tracking
+- 🌱 **Soil moisture** measurement  
+- 🌡️ **Temperature** monitoring
+- 💨 **Air humidity** detection
 
-### 2. Mode Manuel (`system_mode = 2`)
-* L'automatisme est désactivé. L'utilisateur doit utiliser les commutateurs (Switches) sur le Dashboard Node-RED pour allumer ou éteindre les pompes.
+### ⚙️ Intelligent Automation
+- 🤖 **Auto mode**: Pumps activate based on sensor thresholds
+- 🎯 **Smart algorithms** prevent overflow and waste
+- 🔄 **Self-adjusting** irrigation cycles
 
-### 3. Sécurité Incendie (Prioritaire)
-* Si la **Température > 65°C** :
-    * Le Buzzer sonne en continu.
-    * Les deux pompes sont coupées immédiatement (sécurité électrique).
-    * Une notification est envoyée sur le Dashboard.
+### 🌐 Remote Control
+- 🖥️ **Web dashboard** accessible from anywhere
+- ✋ **Manual override** for direct pump control
+- 📱 **Responsive interface** for mobile and desktop
+
+### 🚨 Safety & Alerts
+- 🔥 **Fire detection** (temperature > 65°C)
+- 📢 **Overflow warnings** (water level > 95%)
+- ⚠️ **Low water alerts** (level < 20%)
+- 🚨 **Buzzer activation** for critical events
 
 ---
 
-## 👥 Auteurs
+## 🏗️ System Architecture
 
-Projet réalisé dans le cadre du module **IoT** à l'**ENSAM Meknès** (Année 2025-2026).
-
-* **Ziyter Fatima-Ezzahrae**
-* **En-Najjari Meryem**
-* **Lahboub Wijdane**
+```
+┌─────────────────┐         ┌──────────────┐         ┌─────────────────┐
+│   WOKWI ESP32   │  WiFi   │     MQTT     │  MQTT   │   NODE-RED      │
+│   Simulation    │────────▶│    Broker    │◀────────│   Dashboard     │
+│                 │         │mqtt.cool:1883│         │  localhost:1880 │
+│ • DHT22         │         │              │         │                 │
+│ • HC-SR04       │         │  QoS Levels  │         │ • Gauges        │
+│ • Soil Sensor   │         │  Topics      │         │ • Charts        │
+│ • 2x Relays     │         │  Routing     │         │ • Controls      │
+│ • Buzzer        │         │              │         │ • Alerts        │
+└─────────────────┘         └──────────────┘         └─────────────────┘
+```
 
 ---
 
-*Pour toute question sur le code ou le déploiement, merci de consulter le rapport technique PDF inclus dans l'archive.*
+## 🔧 Hardware Components (Wokwi Simulation)
+
+### 🎛️ Microcontroller
+| Component | Model | Purpose |
+|-----------|-------|---------|
+| MCU | **ESP32 DevKit V1** | Main controller with WiFi |
+
+### 📡 Sensors
+| Sensor | Model | Measures | Interface |
+|--------|-------|----------|-----------|
+| Temperature/Humidity | **DHT22** | 🌡️ Temp & 💨 Humidity | Digital (GPIO 15) |
+| Distance | **HC-SR04** | 💧 Water Level | Ultrasonic (GPIO 5/18) |
+| Soil Moisture | **Custom Chip** | 🌱 Soil Moisture | Analog (GPIO 34) |
+
+### ⚡ Actuators
+| Component | Type | Function | Pin |
+|-----------|------|----------|-----|
+| Relay 1 | Module | 🚰 Tank Fill Pump | GPIO 2 |
+| Relay 2 | Module | 💦 Irrigation Pump | GPIO 13 |
+| Buzzer | Passive | 🔔 Audio Alerts | GPIO 4 |
+| LEDs | Status | 💡 Visual Indicators | Various |
+
+---
+
+## 📍 Complete Pinout Diagram
+
+```
+ESP32 DevKit V1 Pinout
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+         ┌─────────────────────┐
+         │      ESP32          │
+         │                     │
+GPIO 15 ─┤ DHT22 Data          │
+GPIO 34 ─┤ Soil Moisture       │
+GPIO 5  ─┤ HC-SR04 Trigger     │
+GPIO 18 ─┤ HC-SR04 Echo        │
+GPIO 2  ─┤ Pump 1 (Tank)       │
+GPIO 13 ─┤ Pump 2 (Irrigation) │
+GPIO 4  ─┤ Buzzer              │
+3.3V    ─┤ Sensor Power        │
+GND     ─┤ Common Ground       │
+         │                     │
+         └─────────────────────┘
+```
+
+---
+
+## 💻 Software Stack
+
+| Layer | Technology | Version | Purpose |
+|-------|-----------|---------|---------|
+| **Firmware** | Arduino C++ | 1.8+ | ESP32 programming |
+| **Protocol** | MQTT | 3.1.1 | IoT messaging |
+| **Broker** | Mosquitto (Cloud) | - | Message routing |
+| **Dashboard** | Node-RED | 3.0+ | Web interface |
+| **Simulation** | Wokwi | Latest | Hardware emulation |
+| **Libraries** | DHT, NewPing, PubSubClient | - | Sensor & MQTT |
+
+---
+
+## 🚀 Quick Start Guide
+
+### ✅ Prerequisites
+
+```bash
+# Required Software
+- Web Browser (Chrome/Firefox)
+- Node.js (v18+)
+- Node-RED (v3.0+)
+- Internet connection
+
+# Optional
+- Wokwi account (for simulation editing)
+- MQTT Explorer (for debugging)
+```
+
+---
+
+### 📥 Step 1: Clone Repository
+
+```bash
+git clone https://github.com/yourusername/smart-water-iot.git
+cd smart-water-iot
+```
+
+---
+
+### 🧪 Step 2: Launch Wokwi Simulation
+
+1. **Open the project**: [Wokwi Simulation Link](https://wokwi.com/projects/448337889213816833)
+
+2. **Verify files are present**:
+   ```
+   ✓ sketch.ino          (ESP32 firmware)
+   ✓ diagram.json        (Circuit design)
+   ✓ libraries.txt       (Dependencies)
+   ✓ soil-moisture-sensor.chip.c
+   ✓ soil-moisture-sensor.chip.json
+   ```
+
+3. **Click "Start Simulation"** ▶️
+
+4. **Open Serial Monitor** to verify:
+   ```
+   ✓ WiFi connected
+   ✓ MQTT connected
+   ✓ Sensors publishing data
+   ```
+
+---
+
+### 🖥️ Step 3: Setup Node-RED Dashboard
+
+#### Install Node-RED
+```bash
+# Install globally
+npm install -g --unsafe-perm node-red
+
+# Start Node-RED
+node-red
+```
+
+#### Configure Dashboard
+```bash
+# 1. Open browser
+http://localhost:1880
+
+# 2. Install dashboard (Menu → Manage Palette)
+node-red-dashboard
+
+# 3. Import flow
+- Menu (☰) → Import
+- Select nodes.json from repository
+- Click Deploy
+
+# 4. Access dashboard
+http://localhost:1880/ui
+```
+
+#### Configure MQTT Broker
+```
+Broker: broker.mqtt.cool
+Port: 1883
+Client ID: nodered_smartwater
+Clean Session: true
+```
+
+---
+
+### ✅ Step 4: Verify Everything Works
+
+**Checklist:**
+```
+□ Wokwi simulation is running
+□ Serial monitor shows "MQTT Connected"
+□ Node-RED shows "Connected" status
+□ Dashboard displays live sensor values
+□ Water level gauge updates every second
+□ Temperature shows realistic values
+□ Pumps can be controlled manually
+□ Mode toggle works (Auto/Manual)
+```
+
+---
+
+## 📡 MQTT API Documentation
+
+### 📤 Published Topics (ESP32 → Dashboard)
+
+| Topic | Data Type | Range | Unit | Update Rate |
+|-------|-----------|-------|------|-------------|
+| `smartwater/waterlevel` | Integer | 0-100 | % | 1 Hz |
+| `smartwater/waterheight` | Float | 0-400 | cm | 1 Hz |
+| `smartwater/soilmoisture` | Integer | 0-100 | % | 1 Hz |
+| `smartwater/temperature` | Float | -40 to 80 | °C | 1 Hz |
+| `smartwater/humidity` | Float | 0-100 | % | 1 Hz |
+| `smartwater/pump1` | String | ON/OFF | - | On change |
+| `smartwater/pump2` | String | ON/OFF | - | On change |
+| `smartwater/fire` | String | Alert message | - | On trigger |
+| `smartwater/alert` | String | Warning message | - | On trigger |
+
+### 📥 Subscribed Topics (Dashboard → ESP32)
+
+| Topic | Value | Effect |
+|-------|-------|--------|
+| `smartwater/mode_auto` | `1` | 🤖 Enable Auto Mode |
+| `smartwater/mode_auto` | `2` | ✋ Enable Manual Mode |
+| `smartwater/manual/pump1` | `0` | 🔴 Turn OFF Pump 1 |
+| `smartwater/manual/pump1` | `1` | 🟢 Turn ON Pump 1 |
+| `smartwater/manual/pump2` | `0` | 🔴 Turn OFF Pump 2 |
+| `smartwater/manual/pump2` | `1` | 🟢 Turn ON Pump 2 |
+
+---
+
+## ⚙️ System Logic & Algorithms
+
+### 🤖 Automatic Mode (mode = 1)
+
+#### Pump 1: Tank Fill Control
+```cpp
+if (waterLevel <= 20%) {
+    pump1 = ON;  // Start filling
+}
+else if (waterLevel >= 90%) {
+    pump1 = OFF; // Stop filling
+}
+// Hysteresis prevents rapid switching
+```
+
+#### Pump 2: Irrigation Control
+```cpp
+if (soilMoisture <= 30%) {
+    pump2 = ON;  // Start irrigation
+}
+else if (soilMoisture >= 70%) {
+    pump2 = OFF; // Stop irrigation
+}
+```
+
+#### Overflow Protection
+```cpp
+if (waterLevel >= 95%) {
+    buzzer = ON;
+    mqtt.publish("alert", "DANGER: Water too high!");
+}
+```
+
+---
+
+### ✋ Manual Mode (mode = 2)
+
+```cpp
+// All automation disabled
+// Direct control from Node-RED dashboard
+
+pump1 = manual_pump1_state; // 0 or 1
+pump2 = manual_pump2_state; // 0 or 1
+```
+
+---
+
+### 🔥 Fire Detection (Priority Override)
+
+```cpp
+if (temperature > 65°C) {
+    // EMERGENCY MODE
+    buzzer = ON;
+    pump1 = OFF; // Stop all pumps
+    pump2 = OFF;
+    mqtt.publish("fire", "🔥 FIRE WARNING!");
+    return; // Exit normal operation
+}
+```
+
+**This takes priority over all other modes!**
+
+---
+
+## 🎛️ Threshold Configuration
+
+| Parameter | Low | Normal | High | Danger |
+|-----------|-----|--------|------|--------|
+| **Water Level** | < 20% | 20-90% | 90-95% | > 95% |
+| **Soil Moisture** | < 30% | 30-70% | 70-90% | > 90% |
+| **Temperature** | < 15°C | 15-40°C | 40-65°C | > 65°C |
+
+**Modify these in `sketch.ino`:**
+```cpp
+#define LOW_THRESHOLD  20
+#define HIGH_THRESHOLD 90
+#define DANGER_THRESHOLD 95
+#define SOIL_DRY_THRESHOLD 30
+#define SOIL_WET_THRESHOLD 70
+```
+
+---
+
+## 📊 Node-RED Dashboard Features
+
+### 📈 Visualization Components
+- **Gauges**: Real-time sensor values
+- **Charts**: Historical data trends
+- **Status LEDs**: System state indicators
+- **Text Displays**: Numeric readings
+
+### 🎮 Control Elements
+- **Toggle Switch**: Auto/Manual mode
+- **Buttons**: Manual pump control
+- **Sliders**: Threshold adjustment (optional)
+
+### 🚨 Alert System
+- **Toast Notifications**: Pop-up warnings
+- **Audio Alerts**: Browser notifications
+- **Color-Coded Status**: Visual feedback
+
+---
+
+## 🔒 Security Considerations
+
+> ⚠️ **Current Setup Uses Public Broker**
+
+For **production deployment**, implement:
+
+```yaml
+Security Measures:
+  ✓ Use private MQTT broker
+  ✓ Enable TLS/SSL encryption
+  ✓ Add username/password authentication
+  ✓ Implement access control lists (ACL)
+  ✓ Use secure WiFi (WPA2/WPA3)
+  ✓ Regular firmware updates
+```
+
+---
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+#### ❌ ESP32 Won't Connect to MQTT
+```bash
+# Check Serial Monitor
+- Verify WiFi connection
+- Ping broker.mqtt.cool
+- Check firewall settings
+- Try alternative broker (test.mosquitto.org)
+```
+
+#### ❌ Dashboard Shows No Data
+```bash
+# Verify connection chain
+1. Is Wokwi simulation running? ▶️
+2. Check MQTT broker status
+3. Verify Node-RED is connected
+4. Check topic names match exactly
+```
+
+#### ❌ Sensors Show "--" or Wrong Values
+```bash
+# In Wokwi
+- Click on sensors
+- Adjust sliders to change values
+- Check wiring in diagram.json
+- Verify pin assignments in code
+```
+
+#### ❌ Pumps Don't Respond
+```bash
+# Checklist
+- System must be in Manual mode
+- Check MQTT publish is working
+- Verify ESP32 receives commands
+- Check relay wiring
+```
+
+---
+
+## 📁 Project Structure
+
+```
+smart-water-iot/
+├── 📂 wokwi/
+│   ├── sketch.ino                      # ESP32 firmware
+│   ├── diagram.json                    # Circuit design
+│   ├── libraries.txt                   # Dependencies
+│   ├── soil-moisture-sensor.chip.c     # Custom sensor
+│   └── soil-moisture-sensor.chip.json  # Sensor config
+│
+├── 📂 nodered/
+│   ├── flows.json                      # Node-RED flow
+│   └── settings.js                     # Configuration
+│
+├── 📂 docs/
+│   ├── architecture.md                 # System design
+│   ├── api.md                          # MQTT API docs
+│   └── deployment.md                   # Production guide
+│
+├── 📂 videos/
+│   └── h1st02tr.mp4                    # Demo video
+│
+├── README.md                           # This file
+├── LICENSE                             # MIT License
+└── .gitignore                          # Git ignore rules
+```
+
+---
+
+## 🚀 Future Enhancements
+
+### 🔮 Planned Features
+- [ ] 📱 Mobile app (React Native)
+- [ ] 💾 Database integration (MongoDB)
+- [ ] 📊 Advanced analytics & ML predictions
+- [ ] ☁️ Cloud deployment (AWS/Azure)
+- [ ] 🔔 SMS/Email notifications
+- [ ] 📅 Scheduling & automation rules
+- [ ] 🌦️ Weather API integration
+- [ ] 🤖 AI-powered optimization
+
+---
+
+## 📚 Additional Resources
+
+### 📖 Documentation
+- [ESP32 Official Docs](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/)
+- [MQTT Protocol Specification](https://mqtt.org/mqtt-specification/)
+- [Node-RED User Guide](https://nodered.org/docs/user-guide/)
+- [Wokwi Documentation](https://docs.wokwi.com/)
+
+### 🎓 Learning Materials
+- [IoT Fundamentals](https://www.coursera.org/learn/iot)
+- [Arduino Programming](https://www.arduino.cc/en/Tutorial/HomePage)
+- [MQTT Essentials](https://www.hivemq.com/mqtt-essentials/)
+
+---
+
+## 👥 Team
+
+<div align="center">
+
+### 🎓 ENSAM Meknès – IoT Project 2025/2026
+
+| Team Member | Role | GitHub |
+|-------------|------|--------|
+| **Ziyter Fatima-Ezzahrae** | Hardware & Firmware | [@ziyter](https://github.com/ziyter) |
+| **En-Najjari Meryem** | Dashboard & UI | [@ennajjari](https://github.com/ennajjari) |
+| **Lahboub Wijdane** | Integration & Testing | [@lahboub](https://github.com/lahboub) |
+
+**Course**: Internet of Things (IoT)  
+**Institution**: École Nationale Supérieure d'Arts et Métiers  
+**Location**: Meknès, Morocco 🇲🇦
+
+</div>
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+```
+MIT License - Free to use, modify, and distribute
+Attribution required - Please credit the original authors
+```
+
+---
+
+## 🙏 Acknowledgments
+
+- **ENSAM Meknès** for project facilities
+- **Wokwi** for excellent simulation platform
+- **Node-RED** community for dashboard tools
+- **MQTT.org** for protocol documentation
+- All open-source library contributors
+
+---
+
+## 📞 Contact & Support
+
+### 💬 Get in Touch
+- 📧 Email: smart.water.iot@ensam.ma
+- 💼 LinkedIn: [Project Page](#)
+- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/smart-water-iot/issues)
+
+### ⭐ Show Your Support
+If you found this project helpful, please consider:
+- ⭐ Starring the repository
+- 🍴 Forking for your own projects
+- 📢 Sharing with others
+- 💬 Providing feedback
+
+---
+
+<div align="center">
+
+**Made with ❤️ by ENSAM IoT Team**
+
+![Footer](https://img.shields.io/badge/Status-Active-success?style=flat-square)
+![Visitors](https://visitor-badge.laobi.icu/badge?page_id=smartwater.iot)
+
+[⬆️ Back to Top](#-smart-water-management-system-iot-project)
+
+</div>
