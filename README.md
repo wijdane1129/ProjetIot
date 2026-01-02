@@ -564,31 +564,9 @@ Attribution required - Please credit the original authors
 - **MQTT.org** for protocol documentation
 - All open-source library contributors
 
----
-
-## 📞 Contact & Support
-
-### 💬 Get in Touch
-- 📧 Email: smart.water.iot@ensam.ma
-- 💼 LinkedIn: [Project Page](#)
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/smart-water-iot/issues)
-
-### ⭐ Show Your Support
-If you found this project helpful, please consider:
-- ⭐ Starring the repository
-- 🍴 Forking for your own projects
-- 📢 Sharing with others
-- 💬 Providing feedback
-
----
 
 <div align="center">
 
-**Made with ❤️ by ENSAM IoT Team**
-
-![Footer](https://img.shields.io/badge/Status-Active-success?style=flat-square)
-![Visitors](https://visitor-badge.laobi.icu/badge?page_id=smartwater.iot)
-
-[⬆️ Back to Top](#-smart-water-management-system-iot-project)
+**Made with ❤️ by Meryem En-Najjari - Wijdane Lahboub - Fatima Zahra Ziyter**
 
 </div>
