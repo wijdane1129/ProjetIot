@@ -531,28 +531,17 @@ smart-water-iot/
 
 ### 🎓 ENSAM Meknès – IoT Project 2025/2026
 
-| Team Member | Role | GitHub |
-|-------------|------|--------|
-| **Ziyter Fatima-Ezzahrae** | Hardware & Firmware | [@ziyter](https://github.com/ziyter) |
-| **En-Najjari Meryem** | Dashboard & UI | [@ennajjari](https://github.com/ennajjari) |
-| **Lahboub Wijdane** | Integration & Testing | [@lahboub](https://github.com/lahboub) |
+| Team Member | Role |
+|-------------|------|
+| **Ziyter Fatima-Ezzahrae** | Hardware & Firmware |
+| **En-Najjari Meryem** | Dashboard & UI |
+| **Lahboub Wijdane** | Integration & Testing |
 
 **Course**: Internet of Things (IoT)  
 **Institution**: École Nationale Supérieure d'Arts et Métiers  
 **Location**: Meknès, Morocco 🇲🇦
 
 </div>
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-```
-MIT License - Free to use, modify, and distribute
-Attribution required - Please credit the original authors
-```
 
 ---
 
